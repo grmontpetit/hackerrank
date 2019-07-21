@@ -15,14 +15,18 @@ object Solution {
 
   val list = List(5, 4, 8, 1, 2)
   val nth = 3
-  val expected = 4
+  val expected3 = 4
 
   def main(args: Array[String]): Unit = {
     val test1 = findMin(list, Int.MaxValue)
     assert(test1 == 1, s"got $test1 want 1")
 
-    val test2 = findNtMin(list, 3, 0, Int.MaxValue, 0)
-    println(test2)
+    val test2 = findMinWithIndex(list, Int.MaxValue, 0, 0)
+    val expected2 = (1, 3)
+    assert(test2 == expected2, s"got $test2 want $expected2")
+
+    val test3 = findNtMin(list, 3, 0, Int.MaxValue, 0)
+    assert(test3 == expected3, s"got $test3 want $expected3")
   }
 
   /**
