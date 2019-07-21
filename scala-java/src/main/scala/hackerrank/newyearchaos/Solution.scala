@@ -109,7 +109,8 @@ object Solution {
   def incrementSwaps(index: Int, swaps: Swaps, current: Array[Person]): Swaps = {
     val oldCount = swaps.getOrElse(current(index), 0)
     val count: Int = oldCount + 1
-    swaps - current(index) ++ Map(current(index) -> count)
+    val removed = swaps - current(index)
+    removed ++ Map(current(index) -> count)
   }
 
   def unbribe(index: Int, current: Array[Person]): Array[Person] = {

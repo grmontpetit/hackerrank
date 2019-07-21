@@ -1,5 +1,7 @@
 package treesandgraphs.graphs
 
+import scala.collection.mutable
+
 case class Node(value: Int, adjList: List[Node] = List.empty)
 case class Edge(source: Node, destination: Node)
 
@@ -20,7 +22,8 @@ object Solution {
 
     val graph = new Graph(edges, 9)
     graph.printAdj()
-
+    val bfs = graph.bfs(7)
+    println(bfs)
   }
 }
 
@@ -32,27 +35,40 @@ class Graph(val edges: List[Edge], val size: Int) {
     updateNeibors(source, destination, acc)
   }
 
-//  def bfs(queue1: List[Int], queue2: List[Int]): Int = {
-//
-//  }
-//  def bfs(nodeStart: Int, visitedMap: Map[Int, Boolean], acc: List[List[Int]]): List[List[Int]] = {
-//    val neibors = adjMap.getOrElse(nodeStart, List.empty)
-//    neibors.
-//
-//
-//    neibors.iterator.flatMap(n => {
-//      val isVisited = visitedMap.getOrElse(n, false)
-//      if (!isVisited) {
-//        bfs(n, visitedMap, acc)
-//      } else {
-//        acc
-//      }
-//    }).toList
-//
-//  }
+  def bfs(initialVertex: Int): List[Int] = {
+    val mutableVisited: mutable.Stack[Int] = new scala.collection.mutable.Stack[Int].empty
+    val mutableNotVisited: mutable.Queue[Int] = new scala.collection.mutable.Queue[Int].empty
 
-  def shortestPath(source: Node, destination: Node): List[Node] = {
-    List.empty
+    recurseBfs(mutableNotVisited.enqueue(initialVertex), mutableVisited)
+  }
+
+  def recurseBfs(notVisited: mutable.Queue[Int], visited: mutable.Stack[Int]): List[Int] = {
+    if (notVisited.isEmpty) visited.toList
+    else {
+      val front = notVisited.dequeue()
+      visited.push(front)
+      val neibors = adjMap.getOrElse(front, List.empty).filterNot(n => visited.contains(n) || notVisited.contains(n))
+      neibors.foreach(n => notVisited.enqueue(n))
+      recurseBfs(notVisited, visited)
+    }
+  }
+
+  def paths(startNode: Int, visited: List[Int], notVisited: List[Int]): List[Int] = {
+    val neibors: List[Int] = adjMap.getOrElse(startNode, List.empty)
+    val visitList: List[Int] = neibors.filterNot(i => visited.contains(i))
+
+    val updatedVisited: List[Int] = visited :+ startNode
+    val updatedNotVisited: List[Int] = notVisited.filterNot(_ == startNode) ++ visitList
+
+    visitList
+      .iterator
+      .flatMap(node => {
+        if (visited.contains(node)) {
+          List.empty
+        } else {
+          updatedVisited ++ paths(node, updatedVisited, updatedNotVisited)
+        }
+      }).toList
   }
 
   def updateNeibors(source: Node, destination: Node, map: Map[Int, List[Int]]): Map[Int, List[Int]] = {

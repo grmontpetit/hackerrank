@@ -1,17 +1,18 @@
 package hackerrank.newyearchaos
 
-import scala.collection.Map
+import scala.collection.{Map, mutable}
 import scala.io.Source
+import scala.util.Try
 
 object Solution2 {
 
   type Person = Int
   type Swaps = Int
-  type SwapsMap = Map[Person, Swaps]
+  type SwapsMap = mutable.Map[Person, Swaps]
   type IsChaotic = Boolean
 
   def minimumBribes(q: Array[Int]): Unit = {
-    itr(0, q, true, Map.empty, 0)
+    itr(0, q, true, mutable.Map.empty[Person, Swaps], 0)
   }
 
   def itr(index: Int, queue: Array[Int], hasSwapped: Boolean, swaps: SwapsMap, swapsCount: Int): Array[Int] = {
@@ -36,7 +37,8 @@ object Solution2 {
   def incrementSwaps(index: Int, swaps: SwapsMap, queue: Array[Int]): (SwapsMap, IsChaotic) = {
     val oldCount = swaps.getOrElse(queue(index), 0)
     val count: Int = oldCount + 1
-    (swaps - queue(index) ++ Map(queue(index) -> count), count > 2)
+    swaps.update(queue(index), count)
+    (swaps, count > 2)
   }
 
   def unbribe(index: Int, current: Array[Person]): Array[Person] = {
@@ -82,27 +84,13 @@ object Solution2 {
                             |Too chaotic""".stripMargin.split("\\n")
 
     arrays.indices.foreach { i =>
-      //val expected = Try(expectedSource(i).toInt)
+      val expected = Try(expectedSource(i).toInt)
 
       val q = arrays(i)
+      // cannot test because hackerrank expected an output to console
       minimumBribes(q)
 
-//      if (expected.isSuccess) {
-//        assert(result == Right(expected.get), s"got $result want ${expected.get}")
-//      } else {
-//        assert(result == Left("Too chaotic"), s"got $result want ${expected.get}")
-//      }
     }
 
-//    val stdin = scala.io.StdIn
-//
-//    val t = stdin.readLine.trim.toInt
-//
-//    for (tItr <- 1 to t) {
-//      val n = stdin.readLine.trim.toInt
-//
-//      val q = stdin.readLine.split(" ").map(_.trim.toInt)
-//      minimumBribes(q)
-//    }
   }
 }
