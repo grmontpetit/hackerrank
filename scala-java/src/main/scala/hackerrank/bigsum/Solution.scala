@@ -9,7 +9,7 @@ object Solution {
     ar.tail.sum
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val stdin = scala.io.StdIn
 
     val printWriter = new PrintWriter(sys.env("OUTPUT_PATH"))

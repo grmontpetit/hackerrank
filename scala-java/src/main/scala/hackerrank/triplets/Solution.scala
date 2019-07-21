@@ -18,7 +18,7 @@ object Solution {
     Array(s._1, s._2)
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val printWriter = new PrintWriter(sys.env("OUTPUT_PATH"))
 
     val a = StdIn.readLine.replaceAll("\\s+$", "").split(" ").map(_.trim.toInt)

@@ -9,7 +9,7 @@ object Solution {
     scala.math.round(totalCost).toInt
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
 
     val x = solve(12.0, 20, 8)
     assert(x == 15)

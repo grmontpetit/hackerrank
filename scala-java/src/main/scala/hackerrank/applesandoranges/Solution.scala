@@ -11,7 +11,7 @@ object Solution {
     * @param apples
     * @param oranges
     */
-  def countApplesAndOranges(s: Int, t: Int, a: Int, b: Int, apples: Array[Int], oranges: Array[Int]) {
+  def countApplesAndOranges(s: Int, t: Int, a: Int, b: Int, apples: Array[Int], oranges: Array[Int]): Unit = {
     val applesOnHouse = apples.filter(distance => isOverHouse(distance, a, s, t))
     val orangesOnHouse = oranges.filter(distance => isOverHouse(distance, b, s, t))
     println(applesOnHouse.length)

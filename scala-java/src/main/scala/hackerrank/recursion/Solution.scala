@@ -7,7 +7,7 @@ object Solution {
     else n * factorial(n - 1)
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val stdin = scala.io.StdIn
 
     //val printWriter = new PrintWriter(sys.env("OUTPUT_PATH"))

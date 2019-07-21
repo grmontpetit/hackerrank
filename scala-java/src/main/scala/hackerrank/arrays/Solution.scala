@@ -2,7 +2,7 @@ package hackerrank.arrays
 
 object Solution {
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val stdin = scala.io.StdIn
 
     val n = stdin.readLine.trim.toInt

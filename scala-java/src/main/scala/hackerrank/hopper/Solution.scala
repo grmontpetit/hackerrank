@@ -29,7 +29,7 @@ object Solution {
       """.stripMargin
 
 //    val headings: Iterator[Heading] = scala.io.Source.stdin.getLines.flatMap(parse)
-    val headings: Iterator[Heading] = content.split("\\n").flatMap(parse).toIterator
+    val headings: Iterator[Heading] = content.split("\\n").flatMap(parse).iterator
     val outline: Node = toOutline(headings)
     val html: String = toHtml(outline).trim
     write(html)

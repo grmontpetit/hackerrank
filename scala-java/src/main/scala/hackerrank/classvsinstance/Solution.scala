@@ -1,7 +1,7 @@
 package hackerrank.classvsinstance
 
 object Solution {
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     var T=scala.io.StdIn.readInt()
     var i=0
     for(i<-1 to T){

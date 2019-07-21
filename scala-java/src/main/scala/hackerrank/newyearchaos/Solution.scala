@@ -93,7 +93,7 @@ object Solution {
     val second: ParResults = scheduler.value.parallel(first._2, 5)
 
     // merge swaps
-    val mergedSwaps = (first._1.toSeq ++ second._1.toSeq).groupBy(_._1).mapValues(_.map(_._2).sum)
+    val mergedSwaps = (first._1.toSeq ++ second._1.toSeq).groupBy(_._1).view.mapValues(_.map(_._2).sum)
 
     // check if chaotic
     val isChaotic = mergedSwaps.exists(_._2 > 2)
@@ -125,7 +125,7 @@ object Solution {
     result
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
 
 //    val queue1 = """2 1 5 3 4""".split(" ").map(_.trim.toInt)
 //    val count1 = time(minimumBribes(queue1))

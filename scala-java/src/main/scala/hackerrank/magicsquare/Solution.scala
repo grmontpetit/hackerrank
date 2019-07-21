@@ -4,10 +4,10 @@ object Solution {
   // Complete the formingMagicSquare function below.
   def formingMagicSquare(s: Array[Array[Int]]): Int = {
     val rowSums: Array[Int] = s.map(row => row.sum)
-    rowSums.foreach(x => print(x + " "))
+    rowSums.foreach(x => print(s"$x "))
     println
     val colSums: Array[Int] = s.transpose.map(col => col.sum)
-    colSums.foreach(x => print(x + " "))
+    colSums.foreach(x => print(s"$x "))
     println
     println(rowSums.zip(colSums).mkString(" "))
     val zip = rowSums.zip(colSums)

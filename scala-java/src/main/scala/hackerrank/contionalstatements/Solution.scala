@@ -1,7 +1,7 @@
 package hackerrank.contionalstatements
 
 object Solution {
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val stdin = scala.io.StdIn
 
     val N = stdin.readLine.trim.toInt

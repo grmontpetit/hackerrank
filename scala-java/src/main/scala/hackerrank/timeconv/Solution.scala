@@ -23,7 +23,7 @@ object Solution {
     }
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val scan = scala.io.StdIn
 
     //val fw = new PrintWriter(sys.env("OUTPUT_PATH"))

@@ -47,7 +47,7 @@ object Solution2 {
     current
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
 
 //    val queue1 = """2 1 5 3 4""".split(" ").map(_.trim.toInt)
 //    val count1 = time(minimumBribes(queue1))

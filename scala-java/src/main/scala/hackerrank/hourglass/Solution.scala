@@ -18,7 +18,7 @@ object Solution {
     }).max
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val in =
       """|1 1 1 0 0 0
          |0 1 0 0 0 0

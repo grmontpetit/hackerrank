@@ -8,7 +8,7 @@ object Solution {
     split._2 ++ split._1
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val in = """1 2 3 4 5"""
     val numRotations = 4
     val expected = """5 1 2 3 4"""
