@@ -7,7 +7,13 @@ object Solution {
     //println(f(list).mkString("\n"))
    // println(-1 % 2)
 
-    println(factorial(5))
+    //println(factorial(5))
+
+    val oddList = List(1, 3, 4, 2, 1)
+    val evenList = List(3, 5, 3, 1, 8, 7)
+
+    println(oddList.splitAt(3))
+    println(evenList.splitAt(3))
   }
 
   //def f(arr: List[Int]): List[Int] = (1 until arr.size by 2).map(idx => arr(idx)).toList

@@ -1,6 +1,6 @@
 package hackerrank.newyearchaos
 
-import scala.collection.{Map, mutable}
+import scala.collection.mutable
 import scala.io.Source
 import scala.util.Try
 
