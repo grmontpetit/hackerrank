@@ -135,9 +135,9 @@ case class MinNode(data: Int, left: Option[MinNode] = None, right: Option[MinNod
   }
 
   def levelOrder(parent: Int, t: String): Unit = {
-    print(s"($parent)-> (${data} $t) ")
+    print(s"($parent)-> ($data $t) ")
     if (left.isDefined) left.get.levelOrder(data, "l")
-    if (right.isDefined) right.get.levelOrder(data, "l")
+    if (right.isDefined) right.get.levelOrder(data, "r")
   }
 
   def size: Int = {
