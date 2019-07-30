@@ -109,7 +109,7 @@ object Solution {
   def incrementSwaps(index: Int, swaps: Swaps, current: Array[Person]): Swaps = {
     val oldCount = swaps.getOrElse(current(index), 0)
     val count: Int = oldCount + 1
-    val removed = swaps - current(index)
+    val removed = swaps.toMap.removed(current(index))
     removed ++ Map(current(index) -> count)
   }
 
