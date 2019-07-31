@@ -2,13 +2,21 @@ package treesandgraphs.trees.avltree
 
 sealed trait Node
 
-sealed trait BSTNode extends Node {
-  def insert(data: Int): BSTNode
-}
-
-case class AVLNode(data: Int, left: Option[AVLNode] = None, right: Option[AVLNode] = None) extends BSTNode {
+case class BSTNode(data: Int, left: Option[BSTNode] = None, right: Option[BSTNode] = None) extends Node {
 
   override def toString: String = toTree("", "").mkString("\n")
+
+  // http://www.geekviewpoint.com/java/bst/dsw_algorithm
+
+  def size: Int = {
+    val leftSize = left.fold(0) { l =>
+      l.size
+    }
+    val rightSize = right.fold(0) { r =>
+      r.size
+    }
+    leftSize + rightSize + 1
+  }
 
   private def toTree(prefix: String, childrenPrefix: String): Seq[String] = {
     val firstLine = prefix + s"$data"
@@ -22,13 +30,13 @@ case class AVLNode(data: Int, left: Option[AVLNode] = None, right: Option[AVLNod
     firstLine +: lastChild ++: firstChildren
   }
 
-  def insert(dataInsert: Int): AVLNode = {
+  def insert(dataInsert: Int): BSTNode = {
     if (dataInsert > data) {
-      left.fold(this.copy(left = Some(AVLNode(dataInsert)))) { l =>
+      left.fold(this.copy(left = Some(BSTNode(dataInsert)))) { l =>
         this.copy(left = Some(l.insert(dataInsert)))
       }
     } else {
-      right.fold(this.copy(right = Some(AVLNode(dataInsert)))) { r =>
+      right.fold(this.copy(right = Some(BSTNode(dataInsert)))) { r =>
         this.copy(right = Some(r.insert(dataInsert)))
       }
     }
@@ -48,9 +56,9 @@ case class AVLNode(data: Int, left: Option[AVLNode] = None, right: Option[AVLNod
 
 class BinaryTree(numbers: List[Int]) {
 
-  val bst: AVLNode = createBst(AVLNode(numbers.head), numbers.tail)
+  val bst: BSTNode = createBst(BSTNode(numbers.head), numbers.tail)
 
-  private def createBst(root: AVLNode, numbers: List[Int]): AVLNode = {
+  private def createBst(root: BSTNode, numbers: List[Int]): BSTNode = {
     numbers match {
       case Nil => root
       case head :: Nil => root.insert(head)
@@ -60,6 +68,12 @@ class BinaryTree(numbers: List[Int]) {
 
   def printBst: Unit = {
     print(bst)
+  }
+
+  def leftRightSizePrint: Unit = {
+    println
+    if (bst.left.isDefined) println(s"left size: ${bst.left.get.size}")
+    if (bst.right.isDefined) println(s"right size: ${bst.right.get.size}")
   }
 
   def simplePrint: Unit = bst.console
@@ -72,6 +86,7 @@ object Solution {
   def main(args: Array[String]): Unit = {
     val bst = new BinaryTree(numbers)
     bst.printBst
+    bst.leftRightSizePrint
   }
 
 }
