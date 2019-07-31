@@ -1,4 +1,4 @@
-package treesandgraphs.trees.avltree
+package treesandgraphs.trees.bstree
 
 sealed trait Node
 
@@ -16,6 +16,28 @@ case class BSTNode(data: Int, left: Option[BSTNode] = None, right: Option[BSTNod
       r.size
     }
     leftSize + rightSize + 1
+  }
+
+  /************************************************************************
+    *   Before      After
+    *    Gr          Gr
+    *     \           \
+    *     Par         Ch
+    *    /  \        /  \
+    *   Ch   Z      X   Par
+    *  /  \            /  \
+    * X    Y          Y    Z
+    ***********************************************************************/
+  private def rotateRight(grandParent: BSTNode, leftChild: Option[BSTNode]): BSTNode = {
+    val newParent = this.copy(left = leftChild.flatMap(_.right))
+    val newLeftChild = leftChild.map(x => x.copy(right = Some(newParent)))
+    grandParent.copy(right = newLeftChild)
+  }
+
+  private def rotateLeft(grandParent: BSTNode, rightChild: Option[BSTNode]): BSTNode = {
+    val newParent = this.copy(right = rightChild.flatMap(_.left))
+    val newRightChild = rightChild.map(x => x.copy(left = Some(newParent)))
+    grandParent.copy(left = newRightChild)
   }
 
   private def toTree(prefix: String, childrenPrefix: String): Seq[String] = {
@@ -64,6 +86,20 @@ class BinaryTree(numbers: List[Int]) {
       case head :: Nil => root.insert(head)
       case head :: tail => createBst(root.insert(head), tail)
     }
+  }
+
+  /**
+    * Time complexity: log(n)
+    * return the index of most significant set bit: index of
+    * least significant bit is 0
+    */
+  def msb(n: Int, idx: Int): Int = {
+    if (1 < n) msb(n >> 1, idx + 1)
+    else idx
+  }
+
+  def greatestPowerOf2LessThanN(n: Int): Int = {
+    1<<msb(n, 0)
   }
 
   def printBst: Unit = {
