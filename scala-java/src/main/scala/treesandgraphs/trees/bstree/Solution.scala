@@ -1,12 +1,30 @@
 package treesandgraphs.trees.bstree
 
+/*
+ * Implementation of a Binary Search tree with perfect balance.
+ * The tree is balanced using the DSW Algorithm.
+ * This version is 100% scala based.
+ *
+ * The solution is based heavily on http://www.geekviewpoint.com/java/bst/dsw_algorithm
+ * and the author is: Isai Damier
+ *
+ * Transform the given BST into a perfectly balanced BST so that its
+ * height is log n, where n is the number of nodes on the tree.
+ *
+ * The initial goal of this project is to be able to find the median
+ * of a list of numbers in O(1) complexity. The balance of the tree
+ * is done when the tree is initially created and after subsequent
+ * inserts.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
 sealed trait Node
 
+// A None parent node indicates that the node is the root of the tree
 case class BSTNode(data: Int, left: Option[BSTNode] = None, right: Option[BSTNode] = None) extends Node {
 
   override def toString: String = toTree("", "").mkString("\n")
-
-  // http://www.geekviewpoint.com/java/bst/dsw_algorithm
 
   def size: Int = {
     val leftSize = left.fold(0) { l =>
@@ -27,17 +45,21 @@ case class BSTNode(data: Int, left: Option[BSTNode] = None, right: Option[BSTNod
     *   Ch   Z      X   Par
     *  /  \            /  \
     * X    Y          Y    Z
+    *
+    * Gr: parent of the current node
+    * Par: current node
+    * Ch: right child node of the current node
     ***********************************************************************/
-  private def rotateRight(grandParent: BSTNode, leftChild: Option[BSTNode]): BSTNode = {
-    val newParent = this.copy(left = leftChild.flatMap(_.right))
-    val newLeftChild = leftChild.map(x => x.copy(right = Some(newParent)))
-    grandParent.copy(right = newLeftChild)
+  def rotateRight: Option[BSTNode] = {
+    val oldPar = this
+    val oldCh = this.left
+    oldCh.map(ch => ch.copy(right = Some(oldPar.copy(left = oldCh.flatMap(o => o.right)))))
   }
 
-  private def rotateLeft(grandParent: BSTNode, rightChild: Option[BSTNode]): BSTNode = {
-    val newParent = this.copy(right = rightChild.flatMap(_.left))
-    val newRightChild = rightChild.map(x => x.copy(left = Some(newParent)))
-    grandParent.copy(left = newRightChild)
+  def rotateLeft: Option[BSTNode] = {
+    val oldPar = this
+    val oldCh = this.right
+    oldCh.map(ch => ch.copy(left = Some(oldPar.copy(right = oldCh.flatMap(o => o.left)))))
   }
 
   private def toTree(prefix: String, childrenPrefix: String): Seq[String] = {
@@ -102,17 +124,17 @@ class BinaryTree(numbers: List[Int]) {
     1<<msb(n, 0)
   }
 
-  def printBst: Unit = {
+  def printBst(): Unit = {
     print(bst)
   }
 
-  def leftRightSizePrint: Unit = {
+  def leftRightSizePrint(): Unit = {
     println
     if (bst.left.isDefined) println(s"left size: ${bst.left.get.size}")
     if (bst.right.isDefined) println(s"right size: ${bst.right.get.size}")
   }
 
-  def simplePrint: Unit = bst.console
+  def simplePrint(): Unit = bst.console
 }
 
 object Solution {
@@ -121,8 +143,8 @@ object Solution {
 
   def main(args: Array[String]): Unit = {
     val bst = new BinaryTree(numbers)
-    bst.printBst
-    bst.leftRightSizePrint
+    bst.printBst()
+    bst.leftRightSizePrint()
   }
 
 }
