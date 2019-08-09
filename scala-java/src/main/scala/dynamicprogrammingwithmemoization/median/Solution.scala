@@ -11,6 +11,15 @@ class MedianCalculator(private val list: ListBuffer[Int]) {
     mutableList :+ nb
   }
 
+  /**
+    * Quick select the median of an unordered mutable sequence
+    * in best case O(n) and O(n exp 2) worst case.
+    * @param seq The sequence to quick select from.
+    * @param k The kth smallest element.
+    * @param pivotFn The pivot function used to generate a random int that
+    *                acts as a splitter for the sequence.
+    * @return The median of the sequence
+    */
   private def quickSelect(seq: mutable.Seq[Int], k: Int, pivotFn: mutable.Seq[Int] => Int): Int = {
     if (seq.length == 1) {
       assert(k == 0)
@@ -29,12 +38,20 @@ class MedianCalculator(private val list: ListBuffer[Int]) {
     }
   }
 
+  /**
+    * Takes a mutable sequence and generate a random
+    * integer that is used to split the sequence in half.
+    */
   private val pivotFn: mutable.Seq[Int] => Int = { xs =>
     val r = scala.util.Random
     r.nextInt(xs.length)
   }
 
-  // https://rcoh.me/posts/linear-time-median-finding/
+  /**
+    * Find the median in linear time.
+    * https://rcoh.me/posts/linear-time-median-finding/
+    * @return The median of the mutable sequence
+    */
   def quickSelectMedian(): Double = {
     if (mutableList.length == 2) mutableList.sum / 2.0
     else if (mutableList.length == 3) mutableList.sortWith(_ > _)(1)
