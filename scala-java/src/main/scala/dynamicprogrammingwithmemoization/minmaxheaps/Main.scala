@@ -6,9 +6,9 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val heaps = new Heaps(numbers)
-    println(heaps.maxHeap)
+//    println(heaps.maxHeap)
     println
-    println(heaps.minHeap)
+//    println(heaps.minHeap)
   }
 
 }

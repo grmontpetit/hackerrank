@@ -1,14 +1,13 @@
 package dynamicprogrammingwithmemoization.median
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
-class MedianCalculator(private val list: ListBuffer[Int]) {
+class QuickSelect(private val list: List[Int]) {
 
-  private val mutableList: mutable.Seq[Int] = list
+  private val numbers: mutable.Buffer[Int] = list.toBuffer[Int]
 
   def addNum(nb: Int): Unit = {
-    mutableList :+ nb
+    numbers :+ nb
   }
 
   /**
@@ -52,33 +51,15 @@ class MedianCalculator(private val list: ListBuffer[Int]) {
     * https://rcoh.me/posts/linear-time-median-finding/
     * @return The median of the mutable sequence
     */
-  def quickSelectMedian(): Double = {
-    if (mutableList.length == 2) mutableList.sum / 2.0
-    else if (mutableList.length == 3) mutableList.sortWith(_ > _)(1)
-    else if (mutableList.length % 2 == 1) quickSelect(mutableList, mutableList.length / 2, pivotFn)
-    else 0.5 * (quickSelect(mutableList, (mutableList.length / 2) - 1, pivotFn) + quickSelect(mutableList, mutableList.length / 2, pivotFn))
+  def median: Double = {
+    if (numbers.length == 2) numbers.sum / 2.0
+    else if (numbers.length == 3) numbers.sortWith(_ > _)(1)
+    else if (numbers.length % 2 == 1) quickSelect(numbers, list.length / 2, pivotFn)
+    else 0.5 * (quickSelect(numbers, (list.length / 2) - 1, pivotFn) + quickSelect(numbers, list.length / 2, pivotFn))
   }
 
 }
 
-object Solution {
-
-  def main(args: Array[String]): Unit = {
-    val list1 = ListBuffer(4, 2, 3)
-    val list2 = ListBuffer(3, 2)
-    val list3 = ListBuffer(9,1,0,2,3,4,6,8,7,10,5)
-
-    val median1 = new MedianCalculator(list1)
-    val median2 = new MedianCalculator(list2)
-    val median3 = new MedianCalculator(list3)
-
-    val result1 = median1.quickSelectMedian()
-    val result2 = median2.quickSelectMedian()
-    val result3 = median3.quickSelectMedian()
-
-    assert(result1 == 3.0, s"got $result1 want 3.0")
-    assert(result2 == 2.5, s"got $result1 want 2.5")
-    assert(result3 == 5.0, s"got $result1 want 5.0")
-  }
-
+object QuickSelect {
+  def apply(list: List[Int]): QuickSelect = new QuickSelect(list)
 }

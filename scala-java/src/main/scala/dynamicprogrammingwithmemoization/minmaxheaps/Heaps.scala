@@ -2,7 +2,7 @@ package dynamicprogrammingwithmemoization.minmaxheaps
 
 class Heaps(initialNumbers: List[Int]) {
 
-  val (maxHeap, minHeap) = (maxHeap(MaxNode(initialNumbers.head), initialNumbers.tail), minHeap(MinNode(initialNumbers.head), initialNumbers.tail))
+//  val (maxHeap, minHeap) = (maxHeap(MaxNode(initialNumbers.head), initialNumbers.tail), minHeap(MinNode(initialNumbers.head), initialNumbers.tail))
 //  val left: MaxNode = maxHeap(MaxNode(initialNumbers.head), initialNumbers.tail)
 //  val right: MinNode = minHeap(MinNode(initialNumbers.head), initialNumbers.tail)
 
@@ -22,5 +22,8 @@ class Heaps(initialNumbers: List[Int]) {
     }
   }
 
-  private def quickSelectMedian():
+//  private def quickSelectMedian(): Int = {
+//    new MedianCalculator(initialNumbers.toBuffer)
+//  }
+
 }
