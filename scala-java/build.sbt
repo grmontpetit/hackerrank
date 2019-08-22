@@ -4,7 +4,8 @@ lazy val `scala-java` =
     .settings(settings)
     .settings(
       libraryDependencies ++= Seq(
-        "com.lihaoyi" %% "utest" % "0.7.1" % Test
+        "com.lihaoyi" %% "utest" % "0.7.1" % Test,
+        "commons-codec" % "commons-codec" % "1.10"
       )
     )
 

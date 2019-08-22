@@ -1,97 +1,55 @@
 package dynamicprogrammingwithmemoization.minmaxheaps
 
-case class MaxNode(data: Int, left: Option[MaxNode] = None, right: Option[MaxNode] = None) extends Node {
-
-  override def toString = toTree("", "").mkString("\n")
-
-  override def toTree(prefix: String, childrenPrefix: String): Seq[String] = {
-    val firstLine = prefix + s"$data"
-
-    val firstChildren = left.fold(Seq.empty[String]) { l =>
-      l.toTree(childrenPrefix + "L└── ", childrenPrefix + "     ")
-    }
-    val lastChild = right.fold(Seq.empty[String]) { r =>
-      r.toTree(childrenPrefix + "R├── ", childrenPrefix + " |    ")
-    }
-    firstLine +: lastChild ++: firstChildren
-  }
-
-  def levelOrder(parent: Int, t: String): Unit = {
-    print(s"($parent)-> (${this.data} $t) ")
-    if (left.isDefined) left.get.levelOrder(data, "l")
-    if (right.isDefined) right.get.levelOrder(data, "r")
-  }
-
-  def insert(data: Int): MaxNode = {
-    if (data > this.data) {
-      MaxNode(data, left = Some(this))
-    } else {
-      this.left.fold(this.copy(left = Some(MaxNode(data)))) { l =>
-        if (data >= l.data) {
-          val newLeft = MaxNode(data, left = Some(l))
-          this.copy(left = Some(newLeft))
-        } else {
-          this.right.fold(this.copy(right = Some(MaxNode(data)))) { r =>
-            if (data >= r.data) {
-              val newRight = MaxNode(data, left = Some(r))
-              this.copy(right = Some(newRight))
-            } else {
-              this.copy(right = Some(r.insert(data)))
-            }
-          }
-        }
-      }
-    }
-  }
-
-  def insert(node: MaxNode): MaxNode = {
-    if (node.data > this.data) {
-      node.copy()
-      MaxNode(data, left = Some(this))
-    } else {
-      this.left.fold(this.copy(left = Some(MaxNode(data)))) { l =>
-        if (data >= l.data) {
-          val newLeft = MaxNode(data, left = Some(l))
-          this.copy(left = Some(newLeft))
-        } else {
-          this.right.fold(this.copy(right = Some(MaxNode(data)))) { r =>
-            if (data >= r.data) {
-              val newRight = MaxNode(data, left = Some(r))
-              this.copy(right = Some(newRight))
-            } else {
-              this.copy(right = Some(r.insert(data)))
-            }
-          }
-        }
-      }
-    }
-  }
-
-  def size: Int = {
-    1 +
-      this.left.fold(0) { l =>
-        l.size
-      } + this.right.fold(0) { r =>
-      r.size
-    }
-  }
+case class MaxNode(override val data: Int,
+                   override val left: Option[MaxNode] = None,
+                   override val right: Option[MaxNode] = None) extends HeapNode {
 
   /**
-    * Returns a new copy of the Max-Heap with
-    * the new root.
-    * @return The value of the max and the new root
-    *         MaxNode.
+    * Insert a node that has been extracted from a heap
+    * into the current node.
+    * @param dataInsert The node to insert.
+    * @return The new instance of the MaxNode.
     */
-  def extractMax: (Int, Option[MaxNode]) = {
-    val rootValue = this.data
-    val right = this.right
-    val left = this.left
-    val newRoot: Option[MaxNode] = right.fold(left){r =>
-      left.fold[Option[MaxNode]](None){l =>
-        Some(l.insert(r))
+  def insert(dataInsert: MaxNode): MaxNode = {
+    if (dataInsert.data > data) {
+      MaxNode(data = dataInsert.data, left = Some(this))
+    } else {
+      this.copy(right = Some(right.fold[MaxNode](MaxNode(dataInsert.data)) {
+        case node: MaxNode => node.insert(MaxNode(dataInsert.data))
+      }))
+    }
+  }
+
+  override def insert(dataInsert: Int): MaxNode = {
+    if (dataInsert > data) {
+      MaxNode(dataInsert, right = Some(this))
+    } else {
+      left.fold(this.copy(left = Some(MaxNode(dataInsert)))) { l =>
+        this.copy(left = Some(l.insert(dataInsert)))
       }
     }
-    (rootValue, newRoot)
+  }
+
+  override def extractMax: (Int, Option[MaxNode]) = {
+    val left = this.left
+    val right = this.right
+    val newMaxNode: Option[MaxNode] = left.fold(right){l => Some(right.fold(l){r => l.insert(r)})}
+    (this.data, newMaxNode)
+  }
+
+  override def extractMin: (Int, Option[MaxNode]) = extractMin(data, this)
+
+  private def extractMin(lastMin: Int, lastNode: MaxNode): (Int, Option[MaxNode]) = {
+    val (currentMin, currentNode) = if (lastMin < data) (lastMin, lastNode) else (data, this.copy(left = None, right = None))
+    val (leftMin, leftNode) = left.fold[(Int, Option[MaxNode])]((lastMin, Some(lastNode))){l => l.extractMin(lastMin, lastNode)}
+    val (rightMin, rightNode) = right.fold[(Int, Option[MaxNode])]((lastMin, Some(lastNode))){r => r.extractMin(lastMin, lastNode)}
+    if (leftMin < rightMin) {
+      if (leftMin < currentMin) (leftMin, leftNode)
+      else (currentMin, Some(currentNode))
+    } else {
+      if (rightMin < currentMin) (rightMin, rightNode)
+      else (currentMin, Some(currentNode))
+    }
   }
 
 }
