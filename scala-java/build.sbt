@@ -3,13 +3,19 @@ lazy val `scala-java` =
     .in(file("."))
     .settings(settings)
     .settings(
+      resolvers ++= res,
       libraryDependencies ++= Seq(
         "com.lihaoyi" %% "utest" % "0.7.1" % Test,
-        "commons-codec" % "commons-codec" % "1.10"
+        "commons-codec" % "commons-codec" % "1.10",
+        "org.typelevel" % "cats-effect_2.12" % "1.4.0"
       )
     )
 
 lazy val settings = commonSettings
+
+lazy val res = Seq[Resolver](
+  Resolver.DefaultMavenRepository
+)
 
 lazy val commonSettings =
   Seq(
