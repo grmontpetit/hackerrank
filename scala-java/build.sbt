@@ -7,7 +7,9 @@ lazy val `scala-java` =
       libraryDependencies ++= Seq(
         "com.lihaoyi" %% "utest" % "0.7.1" % Test,
         "commons-codec" % "commons-codec" % "1.10",
-        "org.typelevel" % "cats-effect_2.12" % "1.4.0"
+        "org.typelevel" % "cats-effect_2.12" % "1.4.0",
+        "org.scalaz" %% "scalaz-core" % "7.2.27",
+        "org.scalaz" %% "scalaz-effect" % "7.2.27"
       )
     )
 
