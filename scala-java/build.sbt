@@ -9,10 +9,13 @@ lazy val `scala-java` =
         "org.scalatest" %% "scalatest" % "3.0.8",
         "org.scalatest" %% "scalatest" % "3.0.8" % Test,
         "commons-codec" % "commons-codec" % "1.10",
-        "org.typelevel" % "cats-effect_2.12" % "1.4.0",
+        "org.typelevel" %% "cats-effect" % "2.0.0",
         "org.scalaz" %% "scalaz-core" % "7.2.27",
         "org.scalaz" %% "scalaz-effect" % "7.2.27",
-        "com.propensive" % "rapture-json-jackson_2.11" % "1.1.0"
+        "com.propensive" % "rapture-json-jackson_2.11" % "1.1.0",
+        "io.circe" %% "circe-core" % "0.12.1",
+        "io.circe" %% "circe-generic" % "0.12.1",
+        "io.circe" %% "circe-parser" % "0.12.1"
       )
     )
 
