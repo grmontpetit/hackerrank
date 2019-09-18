@@ -1,4 +1,4 @@
-package json.rapture
+package json.circe
 
 import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 

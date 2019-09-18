@@ -2,6 +2,8 @@ package lists
 
 object Solution {
 
+  case class Person(name: Option[String] = None)
+
   def main(args: Array[String]): Unit = {
     val list = List(2, 5, 3, 4, 6, 7, 9, 8)
     //println(f(list).mkString("\n"))
@@ -14,6 +16,9 @@ object Solution {
 
     println(oddList.splitAt(3))
     println(evenList.splitAt(3))
+
+    val names = List(Person(Some("name1")), Person(), Person(Some("name2")))
+    println(names.flatMap(_.name).mkString("|"))
   }
 
   //def f(arr: List[Int]): List[Int] = (1 until arr.size by 2).map(idx => arr(idx)).toList
