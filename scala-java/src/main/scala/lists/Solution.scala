@@ -4,7 +4,7 @@ import scala.util.Try
 
 object Solution {
 
-  case class Person(name: Option[String] = None)
+  case class Person(name: Option[String] = None, sex: Option[String] = None)
   case class Elem(text: String)
 
   def main(args: Array[String]): Unit = {
@@ -16,16 +16,12 @@ object Solution {
     println(oddList.splitAt(3))
     println(evenList.splitAt(3))
 
-    val names = List(Person(Some("name1")), Person(), Person(Some("name2")))
-    println(names.flatMap(_.name).mkString("|"))
+    val names = List(Person(Some("name1"), sex = Some("male")),
+      Person(sex = Some("female")),
+      Person(Some("name2"), sex = Some("female")),
+      Person())
 
-    //      Keyword(LocalizedText("Acromegaly")),
-    //      Keyword(LocalizedText("Cancer")),
-    //      Keyword(LocalizedText("thyroid cancer")),
-    //      Keyword(LocalizedText("colorectal cancer")),
-    //      Keyword(LocalizedText("breast cancer")),
-    //      Keyword(LocalizedText("acromegaly")),
-    //      Keyword(LocalizedText("cancer"))
+    println(names.flatMap(_.name).mkString("|"))
 
     val texts = Seq(
       Elem("Cancer"),
@@ -43,14 +39,7 @@ object Solution {
     //println(texts.intersect(lowerCase))
 
     println(texts.distinctBy(_.text.toLowerCase))
-    println(envOrElse())
-  }
-
-  def envOrElse(): Unit = {
-//    sys.env("BOGUS_BOOLEAN").toBooleanOption.getOrElse(false)
-//    val b: Option[String] = sys.env.get("BOGUS_BOOLEAN")
-//    b.map(s => !s.isEmpty && s.toBoolean)
-    println("env var: " + Try(sys.env("BOGUS_BOOLEAN").toBoolean).toOption.getOrElse(false))
+    println(names.groupBy(_.sex))
   }
 
   def f(arr: List[Int]): List[Int] = {

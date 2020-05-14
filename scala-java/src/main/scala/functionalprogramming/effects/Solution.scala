@@ -1,6 +1,6 @@
 package functionalprogramming.effects
 
-import cats.effect.IO
+//import cats.effect.IO
 
 object Solution {
 
@@ -8,7 +8,7 @@ object Solution {
     //effect.runAsync(_.fold(a => "notfound", b =>))
   }
 
-  def effect: IO[String] = {
-    IO("Hello")
-  }
+//  def effect: IO[String] = {
+//    IO("Hello")
+//  }
 }

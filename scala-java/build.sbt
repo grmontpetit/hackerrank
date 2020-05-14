@@ -15,7 +15,8 @@ lazy val `scala-java` =
         "com.propensive" % "rapture-json-jackson_2.11" % "1.1.0",
         "io.circe" %% "circe-core" % "0.12.1",
         "io.circe" %% "circe-generic" % "0.12.1",
-        "io.circe" %% "circe-parser" % "0.12.1"
+        "io.circe" %% "circe-parser" % "0.12.1",
+        "org.apache.hadoop" % "hadoop-client" % "2.8.5",
       )
     )
 
