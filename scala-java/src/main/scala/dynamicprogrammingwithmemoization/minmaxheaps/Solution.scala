@@ -1,18 +1,11 @@
 package dynamicprogrammingwithmemoization.minmaxheaps
 
 trait Node {
-  def levelOrder(parent: Int, t: String): Unit
   def insert(data: Int): Node
   def size: Int
 }
 
 case class MaxNode(data: Int, left: Option[MaxNode] = None, right: Option[MaxNode] = None) extends Node {
-
-  def levelOrder(parent: Int, t: String): Unit = {
-    print(s"($parent)-> (${this.data} $t) ")
-    if (left.isDefined) left.get.levelOrder(data, "l")
-    if (right.isDefined) right.get.levelOrder(data, "r")
-  }
 
   def insert(data: Int): MaxNode = {
     if (data > this.data) {
@@ -86,6 +79,20 @@ case class MaxNode(data: Int, left: Option[MaxNode] = None, right: Option[MaxNod
     (rootValue, newRoot)
   }
 
+  override def toString: String = toTree("", "").mkString("\n")
+
+  private def toTree(prefix: String, childrenPrefix: String): Seq[String] = {
+    val firstLine = prefix + s"$data"
+
+    val firstChildren = left.fold(Seq.empty[String]) { l =>
+      l.toTree(childrenPrefix + "└── ", childrenPrefix + "    ")
+    }
+    val lastChild = right.fold(Seq.empty[String]) { r =>
+      r.toTree(childrenPrefix + "├── ", childrenPrefix + "|    ")
+    }
+    firstLine +: lastChild ++: firstChildren
+  }
+
 }
 
 case class MinNode(data: Int, left: Option[MinNode] = None, right: Option[MinNode] = None) extends Node {
@@ -134,10 +141,18 @@ case class MinNode(data: Int, left: Option[MinNode] = None, right: Option[MinNod
     }
   }
 
-  def levelOrder(parent: Int, t: String): Unit = {
-    print(s"($parent)-> ($data $t) ")
-    if (left.isDefined) left.get.levelOrder(data, "l")
-    if (right.isDefined) right.get.levelOrder(data, "r")
+  override def toString: String = toTree("", "").mkString("\n")
+
+  private def toTree(prefix: String, childrenPrefix: String): Seq[String] = {
+    val firstLine = prefix + s"$data"
+
+    val firstChildren = left.fold(Seq.empty[String]) { l =>
+      l.toTree(childrenPrefix + "└── ", childrenPrefix + "    ")
+    }
+    val lastChild = right.fold(Seq.empty[String]) { r =>
+      r.toTree(childrenPrefix + "├── ", childrenPrefix + "|    ")
+    }
+    firstLine +: lastChild ++: firstChildren
   }
 
   def size: Int = {
@@ -193,11 +208,13 @@ class Heaps(initialNumbers: List[Int]) {
 }
 
 object Solution {
-
+  // https://stackoverflow.com/questions/11361320/data-structure-to-find-median
   val numbers = List(9, 1, 0, 2, 3, 4, 6, 8, 7, 10, 5)
 
   def main(args: Array[String]): Unit = {
     val heaps = new Heaps(numbers)
+    println(heaps.left)
+    println(heaps.right)
 
   }
 

@@ -7,7 +7,7 @@ object Solution {
     a.fold(0){_ ^ _}
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val a = Array(3, 1, 3, 1)
     assert(lonelyinteger(a) == 0, s"got ${lonelyinteger(a)} want 0")
 //    val stdin = scala.io.StdIn

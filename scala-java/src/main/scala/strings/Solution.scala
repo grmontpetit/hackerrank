@@ -16,6 +16,12 @@ object Solution {
 
     val h = """1.Hello"""
     println(h.split("\\.").head)
+
+    val ok = Some("1")
+    val ok2 = None
+    println(ok.getOrElse("").length > 0)
+    println(ok2.getOrElse("").length > 0)
+    println(ok2.getOrElse("").length == 0)
   }
 
   def randomize(s: String): String = {
