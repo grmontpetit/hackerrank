@@ -82,6 +82,25 @@ case class BSTNode(data: Int, var left: Option[BSTNode] = None, var right: Optio
     leftSize + rightSize + 1
   }
 
+  /************************************************************************
+    *   Before      After
+    *    Gr          Gr
+    *     \           \
+    *     Par         Ch
+    *    /  \        /  \
+    *   Ch   Z      X   Par
+    *  /  \            /  \
+    * X    Y          Y    Z
+    *
+    * Gr: parent of the current node
+    * Par: current node
+    * Ch: right child node of the current node
+    ***********************************************************************/
+  def rotateRight: Option[BSTNode] = {
+    val oldPar = this
+    val oldCh = this.left
+    oldCh.map(ch => ch.copy(right = Some(oldPar.copy(left = oldCh.flatMap(o => o.right)))))
+  }
 
   /**
     * Rotate the current tree left for 1 iteration.
@@ -149,7 +168,21 @@ case class BSTNode(data: Int, var left: Option[BSTNode] = None, var right: Optio
       left.fold(this.copy(left = Some(BSTNode(dataInsert)))) { l =>
         this.copy(left = Some(l.insert(dataInsert)))
       }
+    } else {
+      right.fold(this.copy(right = Some(BSTNode(dataInsert)))) { r =>
+        this.copy(right = Some(r.insert(dataInsert)))
+      }
     }
+  }
+
+  def console: Unit = {
+    simplePrint(data, "root")
+  }
+
+  private def simplePrint(parent: Int, t: String): Unit = {
+    print(s"($parent)-> ($data $t) ")
+    if (left.isDefined) left.get.simplePrint(data, "l")
+    if (right.isDefined) right.get.simplePrint(data, "r")
   }
 
 }
@@ -220,6 +253,21 @@ class BinaryTree(numbers: List[Int]) {
     else unbalanced
   }
 
+  def greatestPowerOf2LessThanN(n: Int): Int = {
+    1<<msb(n, 0)
+  }
+
+  def printBst(): Unit = {
+    print(bst)
+  }
+
+  def leftRightSizePrint(): Unit = {
+    println
+    if (bst.left.isDefined) println(s"left size: ${bst.left.get.size}")
+    if (bst.right.isDefined) println(s"right size: ${bst.right.get.size}")
+  }
+
+  def simplePrint(): Unit = bst.console
 }
 
 object Solution {
