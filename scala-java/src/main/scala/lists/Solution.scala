@@ -1,12 +1,13 @@
 package lists
 
+import scala.util.Try
+
 object Solution {
 
-  def main(args: Array[String]): Unit = {
-    val list = List(2, 5, 3, 4, 6, 7, 9, 8)
-    //println(f(list).mkString("\n"))
-   // println(-1 % 2)
+  case class Person(name: Option[String] = None)
+  case class Elem(text: String)
 
+  def main(args: Array[String]): Unit = {
     //println(factorial(5))
 
     val oddList = List(1, 3, 4, 2, 1)
@@ -14,9 +15,43 @@ object Solution {
 
     println(oddList.splitAt(3))
     println(evenList.splitAt(3))
+
+    val names = List(Person(Some("name1")), Person(), Person(Some("name2")))
+    println(names.flatMap(_.name).mkString("|"))
+
+    //      Keyword(LocalizedText("Acromegaly")),
+    //      Keyword(LocalizedText("Cancer")),
+    //      Keyword(LocalizedText("thyroid cancer")),
+    //      Keyword(LocalizedText("colorectal cancer")),
+    //      Keyword(LocalizedText("breast cancer")),
+    //      Keyword(LocalizedText("acromegaly")),
+    //      Keyword(LocalizedText("cancer"))
+
+    val texts = Seq(
+      Elem("Cancer"),
+      Elem("thyroid cancer"),
+      Elem("colorectal cancer"),
+      Elem("breast cancer"),
+      Elem("acromegaly"),
+      Elem("cancer"),
+      Elem("Acromegaly"))
+
+    val lowerCase = texts.map(x => Elem(x.text.toLowerCase)).distinct
+    val diff = texts.diff(lowerCase)
+    val diffLower = diff.map(x => Elem(x.text.toLowerCase))
+    println(diff ++ lowerCase.diff(diffLower))
+    //println(texts.intersect(lowerCase))
+
+    println(texts.distinctBy(_.text.toLowerCase))
+    println(envOrElse())
   }
 
-  //def f(arr: List[Int]): List[Int] = (1 until arr.size by 2).map(idx => arr(idx)).toList
+  def envOrElse(): Unit = {
+//    sys.env("BOGUS_BOOLEAN").toBooleanOption.getOrElse(false)
+//    val b: Option[String] = sys.env.get("BOGUS_BOOLEAN")
+//    b.map(s => !s.isEmpty && s.toBoolean)
+    println("env var: " + Try(sys.env("BOGUS_BOOLEAN").toBoolean).toOption.getOrElse(false))
+  }
 
   def f(arr: List[Int]): List[Int] = {
     def itr(remaining: List[Int]): List[Int] = {
