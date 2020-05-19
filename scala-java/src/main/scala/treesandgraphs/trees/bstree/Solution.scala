@@ -160,19 +160,20 @@ case class BSTNode(data: Int, var left: Option[BSTNode] = None, var right: Optio
   }
 
   def insert(dataInsert: Int): BSTNode = {
-    if (dataInsert > data) {
-      right.fold(this.copy(right = Some(BSTNode(dataInsert)))) { r =>
-        this.copy(right = Some(r.insert(dataInsert)))
-      }
-    } else {
-      left.fold(this.copy(left = Some(BSTNode(dataInsert)))) { l =>
-        this.copy(left = Some(l.insert(dataInsert)))
-      }
-    } else {
-      right.fold(this.copy(right = Some(BSTNode(dataInsert)))) { r =>
-        this.copy(right = Some(r.insert(dataInsert)))
-      }
-    }
+    ???
+//    if (dataInsert > data) {
+//      right.fold(this.copy(right = Some(BSTNode(dataInsert)))) { r =>
+//        this.copy(right = Some(r.insert(dataInsert)))
+//      }
+//    } else {
+//      left.fold(this.copy(left = Some(BSTNode(dataInsert)))) { l =>
+//        this.copy(left = Some(l.insert(dataInsert)))
+//      }
+//    } else {
+//      right.fold(this.copy(right = Some(BSTNode(dataInsert)))) { r =>
+//        this.copy(right = Some(r.insert(dataInsert)))
+//      }
+//    }
   }
 
   def console: Unit = {
@@ -254,7 +255,8 @@ class BinaryTree(numbers: List[Int]) {
   }
 
   def greatestPowerOf2LessThanN(n: Int): Int = {
-    1<<msb(n, 0)
+    ???
+//    1<<msb(n, 0)
   }
 
   def printBst(): Unit = {
@@ -263,8 +265,8 @@ class BinaryTree(numbers: List[Int]) {
 
   def leftRightSizePrint(): Unit = {
     println
-    if (bst.left.isDefined) println(s"left size: ${bst.left.get.size}")
-    if (bst.right.isDefined) println(s"right size: ${bst.right.get.size}")
+//    if (bst.left.isDefined) println(s"left size: ${bst.left.get.size}")
+//    if (bst.right.isDefined) println(s"right size: ${bst.right.get.size}")
   }
 
   def simplePrint(): Unit = bst.console

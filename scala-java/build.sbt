@@ -16,7 +16,10 @@ lazy val `scala-java` =
         "io.circe" %% "circe-core" % "0.12.1",
         "io.circe" %% "circe-generic" % "0.12.1",
         "io.circe" %% "circe-parser" % "0.12.1",
+        "io.circe" %% "circe-shapes" % "0.12.1",
+        "io.circe" %% "circe-generic-extras" % "0.12.1",
         "org.apache.hadoop" % "hadoop-client" % "2.8.5",
+        "com.chuusai" %% "shapeless" % "2.3.3"
       )
     )
 
