@@ -33,7 +33,7 @@ lazy val commonSettings =
   Seq(
     name := "scala-java",
     version := "0.1.0",
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13e.0",
     organization := "grmontpetit",
     scalacOptions ++= Seq(
       "-unchecked",
