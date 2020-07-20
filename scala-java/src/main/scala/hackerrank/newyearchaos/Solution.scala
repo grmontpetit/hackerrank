@@ -84,22 +84,22 @@ object Solution {
   // Complete the minimumBribes function below.
   def minimumBribes(q: Array[Int]): Either[String, NbOfSwaps] = {
 
-    val z = itr(0, q, Map.empty, true)
-    z._1.exists(_._2 > 2)
-    // Perform 1st split
-    val first: ParResults = scheduler.value.parallel(q, 4)
-
-    // Perform 2nd split
-    val second: ParResults = scheduler.value.parallel(first._2, 5)
-
-    // merge swaps
-    val mergedSwaps = (first._1.toSeq ++ second._1.toSeq).groupBy(_._1).view.mapValues(_.map(_._2).sum)
-
-    // check if chaotic
-    val isChaotic = mergedSwaps.exists(_._2 > 2)
-    if (isChaotic) Left(message)
-    else Right(mergedSwaps.values.sum)
-
+//    val z = itr(0, q, Map.empty, true)
+//    z._1.exists(_._2 > 2)
+//    // Perform 1st split
+//    val first: ParResults = scheduler.value.parallel(q, 4)
+//
+//    // Perform 2nd split
+//    val second: ParResults = scheduler.value.parallel(first._2, 5)
+//
+//    // merge swaps
+//    val mergedSwaps = (first._1.toSeq ++ second._1.toSeq).groupBy(_._1).view.mapValues(_.map(_._2).sum)
+//
+//    // check if chaotic
+//    val isChaotic = mergedSwaps.exists(_._2 > 2)
+//    if (isChaotic) Left(message)
+//    else Right(mergedSwaps.values.sum)
+    ???
   }
 
   def task[T](body: => T): ForkJoinTask[T] = {
@@ -107,10 +107,11 @@ object Solution {
   }
 
   def incrementSwaps(index: Int, swaps: Swaps, current: Array[Person]): Swaps = {
-    val oldCount = swaps.getOrElse(current(index), 0)
-    val count: Int = oldCount + 1
-    val removed = swaps.toMap.removed(current(index))
-    removed ++ Map(current(index) -> count)
+//    val oldCount = swaps.getOrElse(current(index), 0)
+//    val count: Int = oldCount + 1
+//    val removed = swaps.toMap.removed(current(index))
+//    removed ++ Map(current(index) -> count)
+    ???
   }
 
   def unbribe(index: Int, current: Array[Person]): Array[Person] = {

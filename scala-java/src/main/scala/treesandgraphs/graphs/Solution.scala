@@ -36,10 +36,11 @@ class Graph(val edges: List[Edge], val size: Int) {
   }
 
   def bfs(initialVertex: Int): List[Int] = {
-    val mutableVisited: mutable.Stack[Int] = new scala.collection.mutable.Stack[Int].empty
-    val mutableNotVisited: mutable.Queue[Int] = new scala.collection.mutable.Queue[Int].empty
-
-    recurseBfs(mutableNotVisited.enqueue(initialVertex), mutableVisited)
+//    val mutableVisited: mutable.Stack[Int] = new scala.collection.mutable.Stack[Int].empty
+//    val mutableNotVisited: mutable.Queue[Int] = new scala.collection.mutable.Queue[Int].empty
+//
+//    recurseBfs(mutableNotVisited.enqueue(initialVertex), mutableVisited)
+    ???
   }
 
   def recurseBfs(notVisited: mutable.Queue[Int], visited: mutable.Stack[Int]): List[Int] = {
