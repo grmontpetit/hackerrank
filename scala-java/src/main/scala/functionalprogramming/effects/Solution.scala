@@ -1,14 +1,19 @@
 package functionalprogramming.effects
 
-//import cats.effect.IO
+import cats.effect.IO
 
 object Solution {
 
   def main(args: Array[String]): Unit = {
-    //effect.runAsync(_.fold(a => "notfound", b =>))
+    printToConsole("Enter a number:\n").unsafeRunSync()
+    val x = readFromConsole.unsafeRunSync()
+    printToConsole(x).unsafeRunSync()
+    // chaining
   }
 
-//  def effect: IO[String] = {
-//    IO("Hello")
-//  }
+  def printToConsole(message: String): IO[Unit] = {
+    IO(println(message))
+  }
+
+  def readFromConsole: IO[String] = IO(scala.io.StdIn.readLine())
 }
